@@ -1,7 +1,5 @@
 // ignore_for_file: file_names, sized_box_for_whitespace, avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
-
 import '../screens/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {

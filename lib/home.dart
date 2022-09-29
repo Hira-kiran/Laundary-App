@@ -1,8 +1,7 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:internshippractice/API%20forms/signup.dart';
-
+import 'package:internshippractice/screens/signup.dart';
 import 'screens/login_screen.dart';
 
 class HomePage extends StatelessWidget {

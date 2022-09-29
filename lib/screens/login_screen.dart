@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:internshippractice/API%20forms/welcomeScreen.dart';
+import 'package:internshippractice/screens/signup.dart';
+import 'package:internshippractice/screens/wlcm.dart';
+
 import 'package:internshippractice/services/auth_services.dart';
-import '../API forms/signup.dart';
 import '../Modelss/loginModel.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -16,10 +16,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = false;
   final formkey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   AuthServices authServices = AuthServices();
   FormModel formModel = FormModel();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 60, bottom: 10),
                       child: TextFormField(
-                        controller: emailController,
+                        controller: nameController,
                         cursorColor: Colors.pink,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -147,29 +148,53 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.only(top: 40),
                 child: InkWell(
                   onTap: () {
+                    loading = loading;
+                    setState(() {
+                      loading = true;
+                    });
+
                     if (formkey.currentState!.validate()) {
-                      authServices.Login(emailController.text.trim(),
-                          passwordController.text.trim());
+                      loading = false;
+                      AuthServices.Login(nameController.text.trim(),
+                              passwordController.text.trim())
+                          .then((value) {
+                        formModel.username == "admin"
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WelcomeScreen()))
+                            : print(formModel.username);
+                      });
+                      /*   .then((value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const WelcomeScreen()))); */
                     } else {
                       print("Failed");
+                      loading = false;
                     }
                   },
                   child: Container(
-                    height: 65,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.pink,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: const Center(
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23),
-                      ),
-                    ),
-                  ),
+                      height: 65,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Colors.pink,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Center(
+                          child: loading
+                              ? const CircularProgressIndicator(
+                                  color: Color.fromARGB(255, 54, 52, 52),
+                                  strokeWidth: 5,
+                                )
+                              : const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 23),
+                                ))),
                 ),
               ),
             ],
