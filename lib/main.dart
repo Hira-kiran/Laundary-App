@@ -5,8 +5,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:internshippractice/widgetss/buttomNav.dart';
 import 'Constants/general_controller.dart';
+import 'screens/login_screen.dart';
 
 void main() async {
   Get.put(GeneralController());
@@ -14,6 +14,7 @@ void main() async {
   await GetStorage.init();
   runApp(DevicePreview(enabled: true, builder: (context) => const MyApp()));
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(brightness: Brightness.dark),
           debugShowCheckedModeBanner: false,
           title: 'Lottery App',
-          home: const MyNav(),
+          home: const LoginScreen(),
         );
       },
     );

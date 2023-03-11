@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 50),
                 child: Text(
                   "Let's get started?",
                   style: TextStyle(
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 120, left: 15, right: 15),
                 child: Form(
                   key: formkey,
                   child: Column(
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 100, left: 15, right: 15),
                 child: InkWell(
                   onTap: () {
                     loading = loading;

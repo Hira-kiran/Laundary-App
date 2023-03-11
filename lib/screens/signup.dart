@@ -37,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(top: 15),
+        padding: const EdgeInsets.only(top: 40),
         child: Text(
           "Join us now!",
           style: joinTopText,
@@ -50,6 +50,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         child: Column(
           children: [
+            SizedBox(
+              height: 50.h,
+            ),
             Form(
               key: formKey,
               child: Column(
@@ -108,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+        padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
         child: InkWell(
           onTap: () async {
             await signUp().then((value) {
