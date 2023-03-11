@@ -1,11 +1,16 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:internshippractice/Constants/colors.dart';
+import 'package:internshippractice/Constants/controllers.dart';
 import 'package:internshippractice/screens/signup.dart';
-import 'package:internshippractice/screens/wlcm.dart';
-
 import 'package:internshippractice/services/auth_services.dart';
-import '../Modelss/loginModel.dart';
+import 'package:internshippractice/widgetss/textFormField.dart';
+import '../Constants/images.dart';
+import '../Constants/textstyle.dart';
+import '../widgetss/buttomNav.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,10 +21,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = false;
   final formkey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
   AuthServices authServices = AuthServices();
-  FormModel formModel = FormModel();
+
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -31,121 +35,75 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 50, left: 270),
+              Padding(
+                padding: const EdgeInsets.only(top: 50, left: 270),
                 child: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage("images/logo.png"),
+                  radius: 30.r,
+                  backgroundImage: circleAvatarImg,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 30),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
                 child: Text(
                   "Let's get started?",
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 32.sp,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: whiteColor,
                   ),
                 ),
               ),
-
-              //*********** */ For Email
-              Form(
-                key: formkey,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, top: 60, bottom: 10),
-                      child: TextFormField(
+              Padding(
+                padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+                child: Form(
+                  key: formkey,
+                  child: Column(
+                    children: [
+                      TextformFieldW(
                         controller: nameController,
-                        cursorColor: Colors.pink,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                            hintText: "Email",
-                            filled: true,
-                            prefixIcon: const Icon(
-                              Icons.email,
-                              color: Colors.grey,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: const BorderSide(color: Colors.grey),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: const BorderSide(color: Colors.pink),
-                            )),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter your email';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    //*************For Password
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, top: 15, bottom: 10),
-                      child: TextFormField(
-                        controller: passwordController,
-                        cursorColor: Colors.pink,
-                        obscureText: hidePassword,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.pink),
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          hintText: "Password",
-                          filled: true,
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  hidePassword = !hidePassword;
-                                });
-                              },
-                              icon: Icon(
-                                hidePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Colors.pink.withOpacity(0.5),
-                              )),
-                          prefixIcon: const Icon(
-                            Icons.lock,
-                            color: Colors.grey,
-                          ),
+                        hintText: "Email",
+                        prefixIcon: const Icon(
+                          Icons.email,
+                          color: pinkColor,
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter your Password';
-                          }
-                          return null;
-                        },
                       ),
-                    ),
-                  ],
+                      TextformFieldW(
+                        controller: passwordController,
+                        obscure: hidePassword,
+                        hintText: "Password",
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            hidePassword = !hidePassword;
+                            setState(() {});
+                          },
+                          icon: hidePassword
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: greyColor,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: pinkColor,
+                                ),
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: pinkColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-
-              const Padding(
-                padding: EdgeInsets.only(left: 185, top: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 180, top: 5),
                 child: Text(
                   "Forget Password?",
-                  style: TextStyle(color: Colors.grey, fontSize: 17),
+                  style: TextStyle(color: greyColor, fontSize: 18.sp),
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
                 child: InkWell(
                   onTap: () {
                     loading = loading;
@@ -155,61 +113,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     if (formkey.currentState!.validate()) {
                       loading = false;
-                      AuthServices.Login(nameController.text.trim(),
-                              passwordController.text.trim())
+                      AuthServices.Login(
+                              nameController.text, passwordController.text)
                           .then((value) {
-                        formModel.username == "admin"
-                            ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const WelcomeScreen()))
-                            : print(formModel.username);
+                        Get.to(() => const MyNav());
                       });
-                      /*   .then((value) => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const WelcomeScreen()))); */
                     } else {
                       print("Failed");
                       loading = false;
                     }
                   },
                   child: Container(
-                      height: 65,
-                      width: 350,
+                      height: 50.h,
+                      width: 350.w,
                       decoration: BoxDecoration(
-                          color: Colors.pink,
+                          color: pinkColor,
                           borderRadius: BorderRadius.circular(30)),
                       child: Center(
                           child: loading
                               ? const CircularProgressIndicator(
-                                  color: Color.fromARGB(255, 54, 52, 52),
+                                  color: greyColor,
                                   strokeWidth: 5,
                                 )
-                              : const Text(
-                                  "Login",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23),
-                                ))),
+                              : Text("Login", style: loginTextStyle))),
                 ),
               ),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 240, left: 75),
+            padding: const EdgeInsets.only(top: 10, left: 50),
             child: Row(
               children: [
-                const Text(
-                  "Don't have an account?",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ),
+                Text("Don't have an account?", style: loginsideText),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -217,20 +152,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(
                             builder: (context) => const SignUpScreen()));
                   },
-                  child: const Text(
-                    " Signup",
-                    style: TextStyle(
-                        color: Colors.pink,
-                        fontWeight: FontWeight.bold,
-                        // decoration: TextDecoration.underline,
-                        fontSize: 20),
-                  ),
+                  child: Text(" Signup", style: signUpTextStyle),
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     ));
   }
 }
+
+
+// suffixIcon: IconButton(
+//                               onPressed: () {
+//                                 setState(() {
+//                                   hidePassword = !hidePassword;
+//                                 });
+//                               },
+//                               icon: Icon(
+//                                 hidePassword
+//                                     ? Icons.visibility_off
+//                                     : Icons.visibility,
+//                                 color: pinkColor.withOpacity(0.5),
+//                               )),
